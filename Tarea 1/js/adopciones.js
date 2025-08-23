@@ -1,3 +1,4 @@
+//Ir a página de la fila q corresponda
 const filas = {
   "primera-fila": "1ra-fila",
   "segunda-fila": "2da-fila",
@@ -15,3 +16,11 @@ for (let id in filas) {
     });
   }
 }
+
+//Botón de portada
+const goToPortada = () => {
+    window.location.href = "../html/portada.html"
+}
+
+let portadabtn = document.getElementById("btn-portada");
+portadabtn.addEventListener("click", goToPortada)
