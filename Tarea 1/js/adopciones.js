@@ -17,6 +17,8 @@ for (let id in filas) {
   }
 }
 
+// #########################################################################################
+
 //Botón de portada
 const goToPortada = () => {
     window.location.href = "../html/portada.html"

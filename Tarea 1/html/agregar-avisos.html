@@ -7,6 +7,64 @@
     </head>
     <body>
         <h1>Agregar aviso de adopción</h1>
+        <form class="formulario" id="agrear-avisos">
+            <h3 class="titulos-forms">¿Donde?</h3>
+            <label for="region">Región:</label>
+            <select id="region" name="region">
+                <option value="">-- Selecciona una región</option>
+                <option value="arica_parinacota">Arica y Parinacota</option>
+                <option value="tarapaca">Tarapacá</option>
+                <option value="antofagasta">Antofagasta</option>
+                <option value="atacama">Atacama</option>
+                <option value="coquimbo">Coquimbo</option>
+                <option value="valparaiso">Valparaíso</option>
+                <option value="metropolitana">Metropolitana</option>
+                <option value="ohiggins">O’Higgins</option>
+                <option value="maule">Maule</option>
+                <option value="nuble">Ñuble</option>
+                <option value="biobio">Biobío</option>
+                <option value="araucania">La Araucanía</option>
+                <option value="los_rios">Los Ríos</option>
+                <option value="los_lagos">Los Lagos</option>
+                <option value="aysen">Aysén</option>
+                <option value="magallanes">Magallanes y Antártica Chilena</option>
+            </select> 
+            
+            <br> <br>
+
+            <label for="comuna">Comuna:</label>
+            <select id="comuna">
+                <option value="">-- Selecciona una comuna --</option>
+            </select>
+
+            <br> <br>
+
+            <label for="sector">Sector:</label>
+            <input id="sector" name="sector" type="text" maxlenght="100">
+
+            <br> <br>
+
+            <h3 class="titulos-forms">¿Contacto de esta publicación?</h3>
+            <label for="nombre">Nombre:</label>
+            <input id="nombre" name="nombre" type="text" minlenght="4" maxlength="200">
+
+            <br> <br>
+
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email">
+
+            <br><br>
+
+            <label for="nro-celular">Número de celular:</label>
+            <input id="nro-celular" name="nro-celular" type="tel">
+
+            <br><br>
+
+
+
+        </form> 
+
+        <button type="button" id="btn-portada">Ir a la portada</button>
 
         <script src="../js/agregar-avisos.js"></script>
     </body>
