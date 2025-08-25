@@ -60,9 +60,69 @@
 
             <br><br>
 
+            <label for="contacto">Método de Contacto:</label>
+            <select id="contacto">
+                <option value="">-- Selecciona un método de contacto --</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="telegram">Telegram</option>
+                <option value="twitter">X</option>
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+                <option value="otro">Otro</option>
+            </select>
 
+            <div id="metodo-cont" hidden>
+                <label for="metodo-contacto">URL o ID de contacto:</label>
+                <input id="metodo-contacto" name="metodo-contacto" type="text" minlenght="4" maxlength="50">            
+            </div>
+
+            <br><br>
+
+            <h3>¿Qué mascota ofrece en adopción?</h3>
+            <label for="tipo-mascota">Tipo de mascota:</label>
+            <select id="tipo-mascota">
+                <option value="">-- Selecciona un tipo de mascota --</option>
+                <option value="perro">Perro</option>
+                <option value="gato">Gato</option>
+            </select>
+
+            <br><br>
+
+            <label for="cantidad">Cantidad de animales:</label>
+            <input id="cantidad" name="cantidad" type="number">
+
+            <br><br>
+
+            <label for="edad-animal">Edad de animales:</label>
+            <input id="edad-animal" name="edad-animal" type="number">
+
+            <br><br>
+
+            <label for="unidad-edad">Unidad de edad:</label>            
+            <select id="unidad-edad">
+                <option value="">-- Selecciona una unidad de edad --</option>
+                <option value="meses">Meses</option>
+                <option value="años">Años</option>
+            </select>
+
+            <br><br>
+
+            <label for="fecha-entrega">Fecha disponible para entrega:</label>
+            <input id="fecha-entrega" name="fecha-entrega" type="datetime-local"> 
+
+            <br><br>
+
+            <label for="descripcion">Descripción:</label>
+            <input id="descripcion" name="descripcion" type="text">  
+            
+            <br><br>
+
+            <label for="fotos">Fotos:</label>
+            <input id="fotos" name="fotos" type="file" multiple>
 
         </form> 
+
+        <br><br>
 
         <button type="button" id="btn-portada">Ir a la portada</button>
 

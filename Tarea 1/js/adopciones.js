@@ -12,7 +12,7 @@ for (let id in filas) {
   let fila = document.getElementById(id);
   if (fila) {
     fila.addEventListener("click", () => {
-      window.location.href = `../html/html-adopciones/${filas[id]}.html`;
+      window.location.href = `../html/${filas[id]}.html`;
     });
   }
 }
