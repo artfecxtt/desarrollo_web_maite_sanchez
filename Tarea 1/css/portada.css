@@ -1,0 +1,12 @@
+table {
+    border: #b2b2b2 1px solid;
+    border-collapse: collapse;
+    }
+td {
+    border: black 1px solid;
+}
+
+.img {
+    margin:10px;
+    padding:10px;
+}

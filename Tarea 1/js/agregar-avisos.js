@@ -119,7 +119,7 @@ const validarForm = () => {
     const validadorComuna = (comuna) => comuna !== "";
     const validadorSector = (sector) => sector && (sector.length <= 100);
 
-    const validadorName = (name) => name && (name.length >= 3) && (name.length <= 200);
+    const validadorName = (name) => name && (name.trim().length >= 3) && (name.trim().length <= 200);
     const validadorEmail = (email) => {
         const expreg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return email && email.length <= 100 && expreg.test(email);
@@ -131,7 +131,7 @@ const validarForm = () => {
 
     const validadorContacto = (contacto, metodo) => {
         if(contacto !== ""){
-            return metodo.length >=4 && metodo.length <= 50
+            return metodo.trim().length >=4 && metodo.trim().length <= 50
         } else {
             return true
         }
@@ -156,7 +156,7 @@ const validarForm = () => {
     }
     const validadorUnidad = (unidad) => unidad !== ""
 
-    // const validadorFecha = (fecha) => {}
+    const validadorFecha = (fecha) => fecha >= fechaBonita
 
     const validadorFiles = (archivos) => archivos.files.length >= 1 && archivos.files.length <= 5;
 
@@ -176,7 +176,6 @@ const validarForm = () => {
     let cantidadInput = document.getElementById("cantidad");
     let edadInput = document.getElementById("edad-animal");
     let unidadInput = document.getElementById("unidad-edad");
-    let fechaInput = document.getElementById("fecha-entrega");
     let filesInput = document.getElementById("fotos");
 
     if(!validadorRegion(regionInput.value)){
@@ -257,7 +256,12 @@ const validarForm = () => {
         unidadInput.style.borderColor = "";
     }
 
-    // if (!validadorFecha(fecha)){}
+    if (!validadorFecha(fechahoraInput.value)){
+        msg += "Fecha debe ser mayor a 3 horas desde la hora actual\n";
+        fechahoraInput.style.borderColor = "red";
+    } else {
+        fechahoraInput.style.borderColor = "";
+    }
 
     if (!validadorFiles(filesInput)) {
         msg += "Debe subir entre 1 y 5 archivos.\n";
@@ -301,3 +305,24 @@ enviarbtn.addEventListener("click", validarForm)
 
 let contactoInput = document.getElementById("contacto");
 contactoInput.addEventListener("change", metodo_contacto)
+
+// ################################################################
+
+//prerellenado de fecha
+const fecha_ahora = new Date();
+fecha_ahora.setHours(fecha_ahora.getHours() + 3); // suma 3 horas
+
+const año = fecha_ahora.getFullYear();
+const mes = String(fecha_ahora.getMonth() + 1).padStart(2, '0');
+const dia = String(fecha_ahora.getDate()).padStart(2, '0');
+const horas = String(fecha_ahora.getHours()).padStart(2, '0');
+const minutos = String(fecha_ahora.getMinutes()).padStart(2, '0');
+
+const fechaBonita = `${año}-${mes}-${dia}T${horas}:${minutos}`;
+
+const fechahoraInput = document.getElementById("fecha-entrega");
+if (fechahoraInput) {
+    fechahoraInput.value = fechaBonita; //prerellenado
+    fechahoraInput.min = fechaBonita; //que sea la fecha minima
+    //en el .min se hace la validación que se pide, impide que se elija algo menor
+}
