@@ -40,13 +40,13 @@
             <br> <br>
 
             <label for="sector">Sector:</label>
-            <input id="sector" name="sector" type="text" maxlenght="100">
+            <input id="sector" name="sector" type="text">
 
             <br> <br>
 
             <h3 class="titulos-forms">¿Contacto de esta publicación?</h3>
             <label for="nombre">Nombre:</label>
-            <input id="nombre" name="nombre" type="text" minlenght="4" maxlength="200">
+            <input id="nombre" name="nombre" type="text">
 
             <br> <br>
 
@@ -71,9 +71,11 @@
                 <option value="otro">Otro</option>
             </select>
 
+            <br>
+
             <div id="metodo-cont" hidden>
                 <label for="metodo-contacto">URL o ID de contacto:</label>
-                <input id="metodo-contacto" name="metodo-contacto" type="text" minlenght="4" maxlength="50">            
+                <input id="metodo-contacto" name="metodo-contacto" type="text">            
             </div>
 
             <br><br>
@@ -113,18 +115,31 @@
             <br><br>
 
             <label for="descripcion">Descripción:</label>
-            <input id="descripcion" name="descripcion" type="text">  
+            <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>  
             
             <br><br>
 
             <label for="fotos">Fotos:</label>
             <input id="fotos" name="fotos" type="file" multiple>
 
+            <br><br>
+
+            <button type="button" id="btn-enviar">Enviar</button>
         </form> 
 
         <br><br>
 
-        <button type="button" id="btn-portada">Ir a la portada</button>
+        <div id="vent-emergente" class="vent">
+            <div class="vent-content">
+                <p>¿Está seguro que desea agregar este aviso de adopción?</p>
+                <button class="btn-si" id="btnSi">Sí, estoy seguro</button>
+                <button class="btn-no" id="btnNo">No, quiero volver al formulario</button>
+            </div>
+        </div>
+
+        <button type="button" id="btn-portada" hidden>Ir a la portada</button>
+
+
 
         <script src="../js/agregar-avisos.js"></script>
     </body>
