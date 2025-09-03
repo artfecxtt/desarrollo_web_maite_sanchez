@@ -6,127 +6,131 @@
         <link rel="stylesheet" type="text/css" href="../css/agregar-avisos.css">
     </head>
     <body>
-        <h1>Agregar aviso de adopción</h1>
-        <form class="formulario" id="agrear-avisos">
-            <h3 class="titulos-forms">¿Donde?</h3>
-            <label for="region">Región:</label>
-            <select id="region" name="region">
-                <option value="">-- Selecciona una región</option>
-                <option value="arica_parinacota">Arica y Parinacota</option>
-                <option value="tarapaca">Tarapacá</option>
-                <option value="antofagasta">Antofagasta</option>
-                <option value="atacama">Atacama</option>
-                <option value="coquimbo">Coquimbo</option>
-                <option value="valparaiso">Valparaíso</option>
-                <option value="metropolitana">Metropolitana</option>
-                <option value="ohiggins">O’Higgins</option>
-                <option value="maule">Maule</option>
-                <option value="nuble">Ñuble</option>
-                <option value="biobio">Biobío</option>
-                <option value="araucania">La Araucanía</option>
-                <option value="los_rios">Los Ríos</option>
-                <option value="los_lagos">Los Lagos</option>
-                <option value="aysen">Aysén</option>
-                <option value="magallanes">Magallanes y Antártica Chilena</option>
-            </select> 
-            
-            <br> <br>
+        <h1 class="titulo">Agregar aviso de adopción</h1>
+        <div class="container">
+            <form class="formulario" id="agrear-avisos">
+                <h3 class="titulos-forms">¿Donde?</h3>
+                <label for="region">Región:</label>
+                <select id="region" name="region">
+                    <option value="">-- Selecciona una región</option>
+                    <option value="arica_parinacota">Arica y Parinacota</option>
+                    <option value="tarapaca">Tarapacá</option>
+                    <option value="antofagasta">Antofagasta</option>
+                    <option value="atacama">Atacama</option>
+                    <option value="coquimbo">Coquimbo</option>
+                    <option value="valparaiso">Valparaíso</option>
+                    <option value="metropolitana">Metropolitana</option>
+                    <option value="ohiggins">O’Higgins</option>
+                    <option value="maule">Maule</option>
+                    <option value="nuble">Ñuble</option>
+                    <option value="biobio">Biobío</option>
+                    <option value="araucania">La Araucanía</option>
+                    <option value="los_rios">Los Ríos</option>
+                    <option value="los_lagos">Los Lagos</option>
+                    <option value="aysen">Aysén</option>
+                    <option value="magallanes">Magallanes y Antártica Chilena</option>
+                </select> 
+                
+                <br> <br>
 
-            <label for="comuna">Comuna:</label>
-            <select id="comuna">
-                <option value="">-- Selecciona una comuna --</option>
-            </select>
+                <label for="comuna">Comuna:</label>
+                <select id="comuna">
+                    <option value="">-- Selecciona una comuna --</option>
+                </select>
 
-            <br> <br>
+                <br> <br>
 
-            <label for="sector">Sector:</label>
-            <input id="sector" name="sector" type="text">
+                <label for="sector">Sector:</label>
+                <input id="sector" name="sector" type="text">
 
-            <br> <br>
+                <br> <br>
 
-            <h3 class="titulos-forms">¿Contacto de esta publicación?</h3>
-            <label for="nombre">Nombre:</label>
-            <input id="nombre" name="nombre" type="text">
+                <h3 class="titulos-forms">¿Contacto de esta publicación?</h3>
+                <label for="nombre">Nombre:</label>
+                <input id="nombre" name="nombre" type="text">
 
-            <br> <br>
+                <br> <br>
 
-            <label for="email">Email:</label>
-            <input id="email" name="email" type="email">
+                <label for="email">Email:</label>
+                <input id="email" name="email" type="email">
 
-            <br><br>
+                <br><br>
 
-            <label for="nro-celular">Número de celular:</label>
-            <input id="nro-celular" name="nro-celular" type="tel">
+                <label for="nro-celular">Número de celular:</label>
+                <input id="nro-celular" name="nro-celular" type="tel">
 
-            <br><br>
+                <br><br>
 
-            <label for="contacto">Método de Contacto:</label>
-            <select id="contacto">
-                <option value="">-- Selecciona un método de contacto --</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="telegram">Telegram</option>
-                <option value="twitter">X</option>
-                <option value="instagram">Instagram</option>
-                <option value="tiktok">TikTok</option>
-                <option value="otro">Otro</option>
-            </select>
+                <label for="contacto">Método de Contacto:</label>
+                <select id="contacto">
+                    <option value="">-- Selecciona un método de contacto --</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="twitter">X</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="tiktok">TikTok</option>
+                    <option value="otro">Otro</option>
+                </select>
 
+                <br>
+
+                <div id="metodo-cont" hidden>
+                    <label for="metodo-contacto">URL o ID de contacto:</label>
+                    <input id="metodo-contacto" name="metodo-contacto" type="text">            
+                </div>
+
+                <br><br>
+
+                <h3>¿Qué mascota ofrece en adopción?</h3>
+                <label for="tipo-mascota">Tipo de mascota:</label>
+                <select id="tipo-mascota">
+                    <option value="">-- Selecciona un tipo de mascota --</option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                </select>
+
+                <br><br>
+
+                <label for="cantidad">Cantidad de animales:</label>
+                <input id="cantidad" name="cantidad" type="number">
+
+                <br><br>
+
+                <label for="edad-animal">Edad de animales:</label>
+                <input id="edad-animal" name="edad-animal" type="number">
+
+                <br><br>
+
+                <label for="unidad-edad">Unidad de edad:</label>            
+                <select id="unidad-edad">
+                    <option value="">-- Selecciona una unidad de edad --</option>
+                    <option value="meses">Meses</option>
+                    <option value="años">Años</option>
+                </select>
+
+                <br><br>
+
+                <label for="fecha-entrega">Fecha disponible para entrega:</label>
+                <input id="fecha-entrega" name="fecha-entrega" type="datetime-local"> 
+
+                <br><br>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>  
+                
+                <br><br>
+
+                <label for="fotos">Fotos (Suba todos los archivos al mismo tiempo):</label>
+                <input id="fotos" name="fotos" type="file" multiple>
+
+                <br><br>
+
+                <button type="button" id="btn-enviar">Enviar</button>
+            </form> 
             <br>
-
-            <div id="metodo-cont" hidden>
-                <label for="metodo-contacto">URL o ID de contacto:</label>
-                <input id="metodo-contacto" name="metodo-contacto" type="text">            
-            </div>
-
-            <br><br>
-
-            <h3>¿Qué mascota ofrece en adopción?</h3>
-            <label for="tipo-mascota">Tipo de mascota:</label>
-            <select id="tipo-mascota">
-                <option value="">-- Selecciona un tipo de mascota --</option>
-                <option value="perro">Perro</option>
-                <option value="gato">Gato</option>
-            </select>
-
-            <br><br>
-
-            <label for="cantidad">Cantidad de animales:</label>
-            <input id="cantidad" name="cantidad" type="number">
-
-            <br><br>
-
-            <label for="edad-animal">Edad de animales:</label>
-            <input id="edad-animal" name="edad-animal" type="number">
-
-            <br><br>
-
-            <label for="unidad-edad">Unidad de edad:</label>            
-            <select id="unidad-edad">
-                <option value="">-- Selecciona una unidad de edad --</option>
-                <option value="meses">Meses</option>
-                <option value="años">Años</option>
-            </select>
-
-            <br><br>
-
-            <label for="fecha-entrega">Fecha disponible para entrega:</label>
-            <input id="fecha-entrega" name="fecha-entrega" type="datetime-local"> 
-
-            <br><br>
-
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>  
-            
-            <br><br>
-
-            <label for="fotos">Fotos (Suba todos los archivos al mismo tiempo):</label>
-            <input id="fotos" name="fotos" type="file" multiple>
-
-            <br><br>
-
-            <button type="button" id="btn-enviar">Enviar</button>
-        </form> 
-
+            <br>
+            <button type="button" id="btn-portada" hidden>Ir a la portada</button>
+        </div>
         <br><br>
 
         <div id="vent-emergente" class="vent">
@@ -137,7 +141,7 @@
             </div>
         </div>
 
-        <button type="button" id="btn-portada" hidden>Ir a la portada</button>
+
 
 
 

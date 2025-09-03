@@ -1,3 +1,16 @@
 .graficos {
+    color: white;
+    font-size: large;
+    justify-content: center;
+    align-items: center;
+    background: #59828b;
     font-weight: normal;
+}
+
+.main {
+    text-align: center;
+}
+
+hr {
+    width: 50%;
 }

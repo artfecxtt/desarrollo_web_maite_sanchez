@@ -1,3 +1,17 @@
+.titulo {
+    text-align: center;
+}
+
+.container {
+  height: 50%;
+  max-width: 400px;
+  margin: 2% auto;
+  padding: 2rem;
+  padding-top: .5rem;
+  background-color: #8eabb1;
+}
+
+
 /*ventana emergente*/
 .vent {
     display: none; /* oculto por defecto */
@@ -24,6 +38,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background: #b2ced3;
 }
 
 textarea {

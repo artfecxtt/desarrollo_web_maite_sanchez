@@ -1,5 +1,39 @@
+.navbar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    background: #59828b;
+}
+
+.navbar a {
+    text-decoration: none;
+    margin: 0 2em;
+    padding: .25em;
+    font-size: 1rem;
+}
+
+.navbar-page {
+    color: white
+}
+
+.navbar-page:hover {
+    color: #1e2c2f;
+    transition: 0.2s ease;
+}
+
+.container {
+  height: 50%;
+  max-width: 50%;
+  background-color: #afd1d7;
+}
+
+.main {
+    font-weight: bold;
+    text-align: center;
+}
+
 table {
-    border: #b2b2b2 1px solid;
     border-collapse: collapse;
     }
 td {
