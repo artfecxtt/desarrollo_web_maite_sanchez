@@ -228,6 +228,46 @@ const validarForm = () => {
         metodoInput.style.borderColor = "";
     }
 
+    let cont2Input = document.getElementById("contacto2")
+    let cont3Input = document.getElementById("contacto3")
+    let cont4Input = document.getElementById("contacto4")
+    let cont5Input = document.getElementById("contacto5")
+
+    let metodo2 = document.getElementById("metodo-contacto2")
+    let metodo3 = document.getElementById("metodo-contacto3")
+    let metodo4 = document.getElementById("metodo-contacto4")
+    let metodo5 = document.getElementById("metodo-contacto5")
+
+    if (!validadorContacto(cont2Input.value, metodo2.value)){
+        msg += "ID o URL inválida (debe tener entre 4 y 50 caracteres)\n";
+        metodo2.style.borderColor = "red";
+    } else {
+        metodo2.style.borderColor = "";
+    }
+
+    if (!validadorContacto(cont3Input.value, metodo3.value)){
+        msg += "ID o URL inválida (debe tener entre 4 y 50 caracteres)\n";
+        metodo3.style.borderColor = "red";
+    } else {
+        metodo3.style.borderColor = "";
+    }
+
+    if (!validadorContacto(cont4Input.value, metodo4.value)){
+        msg += "ID o URL inválida (debe tener entre 4 y 50 caracteres)\n";
+        metodo4.style.borderColor = "red";
+    } else {
+        metodo4.style.borderColor = "";
+    }
+
+    if (!validadorContacto(cont5Input.value, metodo5.value)){
+        msg += "ID o URL inválida (debe tener entre 4 y 50 caracteres)\n";
+        metodo5.style.borderColor = "red";
+    } else {
+        metodo5.style.borderColor = "";
+    }
+
+
+
     if (!validadorTipo(tipoInput.value)) {
         msg += "Debe seleccionar un tipo de mascota.\n";
         tipoInput.style.borderColor = "red";
@@ -326,3 +366,33 @@ if (fechahoraInput) {
     fechahoraInput.min = fechaBonita; //que sea la fecha minima
     //en el .min se hace la validación que se pide, impide que se elija algo menor
 }
+
+// ################################################################
+
+let btn_cont1 = document.getElementById("btn-cont1");
+btn_cont1.addEventListener("click", () => {
+    let div_cont2 = document.getElementById("cont2");
+    div_cont2.hidden=false
+    btn_cont1.hidden=true
+})
+
+let btn_cont2 = document.getElementById("btn-cont2");
+btn_cont2.addEventListener("click", () => {
+    let div_cont3 = document.getElementById("cont3");
+    div_cont3.hidden=false
+    btn_cont2.hidden=true
+})
+
+let btn_cont3 = document.getElementById("btn-cont3");
+btn_cont3.addEventListener("click", () => {
+    let div_cont4 = document.getElementById("cont4");
+    div_cont4.hidden=false
+    btn_cont3.hidden=true
+})
+
+let btn_cont4 = document.getElementById("btn-cont4");
+btn_cont4.addEventListener("click", () => {
+    let div_cont5 = document.getElementById("cont5");
+    div_cont5.hidden=false
+    btn_cont4.hidden=true
+})
