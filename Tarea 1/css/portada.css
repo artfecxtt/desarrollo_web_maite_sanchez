@@ -22,10 +22,27 @@
     transition: 0.2s ease;
 }
 
+.titulos{
+    text-align: center;
+}
+
+#sub-titulo{
+    font-weight: normal;
+}
+
+.ultimos-avisos{
+    text-align: center;
+}
+
 .container {
   height: 50%;
   max-width: 50%;
+  margin: auto;
   background-color: #afd1d7;
+}
+
+.tabla-avisos{
+    margin: auto;
 }
 
 .main {
