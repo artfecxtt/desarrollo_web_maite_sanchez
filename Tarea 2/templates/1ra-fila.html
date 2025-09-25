@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title> Adopciones </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/1ra-fila.css') }}">
+    </head>
+    <body>
+        <h1 class="titulo">¡Mira nuestras adopciones!</h1>
+
+        <div class="container">
+            <h2>Fecha de Publicación: </h2><h3>{{ datos.aviso.fecha_ingreso }}</h3>
+            <hr>
+            <h2>Fecha de Entrega: </h2><h3>{{ datos.aviso.fecha_entrega }}</h3>
+            <hr>
+            <h2>Comuna: </h2><h3>{{ datos.comuna.comuna }}</h3>
+            <hr>
+            <h2>Sector: </h2><h3>{{ datos.aviso.sector }}</h3>
+            <hr>
+            <h2>Cantidad, Edad y Tipo de mascota: </h2><h3>{{ dato.cantidad }} {{ dato.tipo }} <br> {{ dato.edad }} {% if dato.unidad_medida == 'a' %}años{% else %}meses{% endif %}</h3>
+            <hr>
+            {% if dato.contactos.contactos %}
+                {% for contacto in dato.contactos.contactos %}
+                    <h2>Nombre y Contacto: </h2><h3>{{ contacto.nombre }}<br>{{ contacto.identificador }}</h3>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <h2>Nombre y Contacto: </h2><h3>Correo electrónico<br>{{ dato.aviso.email }}</h3>
+                <hr>
+            {% endif %}
+            
+        </div>
+
+        <div class="container" id="fotos">
+            <h2>Fotos:</h2>
+            <div class="container-fotos">
+                {% for foto in datos.fotos.fotos %}
+                    <img id="img{{ loop.index }}" 
+                        src="{{ url_for('static', filename='uploads/' + foto.nombre_archivo) }}" 
+                        alt="Mascota {{ loop.index }}" 
+                        width="320" height="240"
+                        onclick="open_popout('img-{{ loop.index }}')">
+                    <br>        
+                {% endfor %}
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="btns">
+            <button type="button" id="btn-portada">Ir a la portada</button>
+            <button type="button" id="btn-adopciones">Ir a la lista de adopciones</button>
+        </div>
+
+        <script>
+            const PORTADA_URL = "{{ url_for('portada') }}";
+        </script>
+
+        <script>
+            const ADOPCIONES_URL = "{{ url_for('adopciones') }}";
+        </script>
+
+        <br>
+        <br>
+        <br>
+        {% for foto in fotos%}
+        <div class="popout" id="img-{{ loop.index }}">
+            <div class="popout-content">
+                <img src="{{ url_for('static', filename='uploads/' + foto) }}" 
+                    alt="Mascota {{ loop.index }}" 
+                    width="800" height="600">
+                <button class="close-btn" onclick="close_popout('img-{{ loop.index }}')" id="closeBtn1">Cerrar</button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <script src="{{ url_for('static', filename='js/1ra-fila.js') }}"></script>
+    </body>
+
+</html>

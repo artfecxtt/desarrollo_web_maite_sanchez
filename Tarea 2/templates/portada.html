@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title> CC5002 - Tarea 1 </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/portada.css') }}">
+    </head>
+    <body>
+        <div class="titulos">
+            <h1> ¡Hola! Bienvenida/o a nuestro portal de adopción de perritos y gatitos</h1>
+            <h2 id="sub-titulo"> ¿Algo en específico que desees hacer?</h2>
+        </div>
+        <div class="navbar">
+            <a class="navbar-page" href="{{ url_for('agregar_avisos') }}">Agregar aviso de adopción</a>
+            <a class="navbar-page" href="{{ url_for('adopciones') }}">Ver listado de adopciones</a>
+            <a class="navbar-page" href="{{ url_for('estadisticas') }}">Estadísticas</a>
+        </div>
+        
+        <div class="ultimos-avisos"> <h2> Últimos avisos </h2> </div>
+        <div class="container">
+            <table class = "tabla-avisos">
+                <tr>
+                    <td class="main">Fecha de Publicación</td>
+                    <td class="main">Comuna</td>
+                    <td class="main">Sector</td>
+                    <td class="main">Cantidad; Edad; Tipo</td>
+                    <td class="main">Foto</td>
+                </tr>
+
+                {% for dato in datos %}
+                    <tr>
+                        <td>{{ dato.fecha_ingreso }}</td>
+                        <td>{{ dato.comuna.nombre }}
+                        <td>{{ dato.sector }}</td>
+                        <td>{{ dato.cantidad }} {{ dato.tipo }} <br> {{ dato.edad }} {% if dato.unidad_medida == 'a' %}años{% else %}meses{% endif %} </td>
+                        <td class="img">
+                            <img src="{{ url_for('static', filename = 'uploads/' + dato.foto_principal.nombre_archivo) }}" alt="{{ dato.aviso.tipo }}" width="320" height="240">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+        <script src="{{ url_for('static', filename='js/portada.js') }}"></script>
+    </body>
+</html>

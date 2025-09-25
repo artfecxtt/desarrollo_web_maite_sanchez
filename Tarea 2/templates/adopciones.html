@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title> Listado de adopciones </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/adopciones.css') }}">
+    </head>
+    <body>
+        <div class="listado">
+            <h1> Listado de Adopciones </h1>
+            <h2> ¡Clickea una fila para ver más detalles!</h2>
+        </div>
+        <div class="container">
+            <table class="tabla-avisos">
+                <tr>
+                    <td class="main">Fecha de Publicación</td>
+                    <td class="main">Fecha de Entrega</td>
+                    <td class="main">Comuna</td>
+                    <td class="main">Sector</td>
+                    <td class="main">Cantidad; Edad; Tipo</td>
+                    <td class="main">Nombre; Contacto</td>
+                    <td class="main">Total Fotos</td>
+                </tr>
+
+                {% for dato in datos %}
+                    <tr class="fila-clickeable" id="fila-{{ dato.id }}">
+                        <td>{{ dato.aviso.fecha_ingreso }}</td>
+                        <td>{{ dato.aviso.fecha_entrega }}</td>
+                        <td>{{ dato.comuna.comuna }}</td>
+                        <td>{{ dato.aviso.sector }}</td>
+                        <td>{{ dato.cantidad }} {{ dato.tipo }} <br> {{ dato.edad }} {% if dato.unidad_medida == 'a' %}años{% else %}meses{% endif %} </td>
+                        {% if dato.contactos.contactos %}
+                            {% for contacto in dato.contactos.contactos %}
+                                <td>{{ contacto.nombre }}<br>{{ contacto.identificador }}</td>
+                                {% break %}
+                            {% endfor %}
+                        {% else %}
+                            <td>{{ dato.aviso.email }}</td>
+                        {% endif %}
+                        <td>{{ dato.num_fotos.num_fotos }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        
+        <div class="boton"> <button type="button" id="btn-portada">Ir a la portada</button> </div>
+
+        <script>
+            const PORTADA_URL = "{{ url_for('portada') }}";
+        </script>
+
+        <script src="{{ url_for('static', filename='js/adopciones.js') }}"></script>
+    </body>
+</html>

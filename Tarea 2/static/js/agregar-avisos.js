@@ -1,6 +1,6 @@
 //Botón de portada
 const goToPortada = () => {
-    window.location.href = "../html/portada.html"
+    window.location.href = PORTADA_URL
 }
 
 let portadabtn = document.getElementById("btn-portada");

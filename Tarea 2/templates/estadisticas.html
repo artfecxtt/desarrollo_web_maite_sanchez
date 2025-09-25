@@ -3,7 +3,7 @@
     <head>
         <title> Estadísticas </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/estadisticas.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/estadisticas.css') }}">
     </head>
     <body>
         <div class="main">
@@ -15,7 +15,7 @@
                 Cantidad de avisos de adopción por día
             </h3>
 
-            <img src="../cantidad-diaria.png" alt="graph-lines avisos por día">
+            <img src="{{ url_for('static', filename='images/cantidad-diaria.png') }}" alt="graph-lines avisos por día">
 
             <hr>
 
@@ -23,7 +23,7 @@
                 Total de avisos por tipo de mascota
             </h3>
         
-            <img src="../cantidad-tipo-mascota.png" alt="graph-cake avisos por tipo mascota">
+            <img src="{{ url_for('static', filename='images/cantidad-tipo-mascota.png') }}" alt="graph-cake avisos por tipo mascota">
             
             <hr>
 
@@ -31,7 +31,7 @@
                 Cantidad de avisos mensuales por tipo de mascota
             </h3>
 
-            <img src="../cantidad-mensual.png" alt="graph-bar avisos mensuales por tipo mascota">
+            <img src="{{ url_for('static', filename='images/cantidad-mensual.png') }}" alt="graph-bar avisos mensuales por tipo mascota">
 
 
 
@@ -40,6 +40,10 @@
 
             <button type="button" id="btn-portada">Ir a la portada</button>
 
+            <script>
+                const PORTADA_URL = "{{ url_for('portada') }}";
+            </script>
+
             <br>
             <br>
             <br>
@@ -47,6 +51,6 @@
 
         </div>
 
-        <script src="../js/estadisticas.js"></script>
+        <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
     </body>
 </html>

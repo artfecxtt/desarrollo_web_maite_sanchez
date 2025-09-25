@@ -3,12 +3,12 @@
     <head>
         <title> Agregar aviso de adopción </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="../css/agregar-avisos.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/agregar-avisos.css') }}">
     </head>
     <body>
         <h1 class="titulo">Agregar aviso de adopción</h1>
         <div class="container">
-            <form class="formulario" id="agrear-avisos">
+            <form class="formulario" id="agregar-avisos">
                 <h3 class="titulos-forms">¿Donde?</h3>
                 <label for="region">Región:</label>
                 <select id="region" name="region">
@@ -219,14 +219,18 @@
             <br>
             <br>
             <button type="button" id="btn-portada" hidden>Ir a la portada</button>
+
+            <script>
+                const PORTADA_URL = "{{ url_for('portada') }}";
+            </script>
         </div>
         <br><br>
 
         <div id="vent-emergente" class="vent">
             <div class="vent-content">
                 <p>¿Está seguro que desea agregar este aviso de adopción?</p>
-                <button class="btn-si" id="btnSi">Sí, estoy seguro</button>
-                <button class="btn-no" id="btnNo">No, no estoy seguro, quiero volver al formulario</button>
+                <button class="btn-si" type="submit" id="btnSi" form="agregar-avisos">Sí, estoy seguro</button>
+                <button class="btn-no" type="button" id="btnNo">No, no estoy seguro, quiero volver al formulario</button>
             </div>
         </div>
 
@@ -234,7 +238,7 @@
 
 
 
-        <script src="../js/agregar-avisos.js"></script>
+        <script src="{{ url_for('static', filename='js/agregar-avisos.js') }}"></script>
     </body>
 
 </html>
