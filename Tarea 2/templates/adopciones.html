@@ -22,7 +22,7 @@
                     <td class="main">Total Fotos</td>
                 </tr>
 
-                {% for dato in datos %}
+                {% for dato in paginated_avisos.items %}
                     <tr class="fila-clickeable" id="fila-{{ dato.id }}">
                         <td>{{ dato.aviso.fecha_ingreso }}</td>
                         <td>{{ dato.aviso.fecha_entrega }}</td>

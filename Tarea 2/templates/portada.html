@@ -27,7 +27,7 @@
                     <td class="main">Foto</td>
                 </tr>
 
-                {% for dato in datos %}
+                {% for dato in paginated_avisos.items %}
                     <tr>
                         <td>{{ dato.fecha_ingreso }}</td>
                         <td>{{ dato.comuna.nombre }}

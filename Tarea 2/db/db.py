@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, DateTime, String, Enum, Text, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from .models import AvisoAdopcion, Comuna, Region, Foto, ContactarPor
+import datetime
 
 DB_NAME = "tarea2"
 DB_USERNAME = "cc5002"
@@ -54,3 +55,50 @@ def get_number_of_photos_by_aviso(aviso_id):
     number = session.query(Foto).filter_by(aviso_id=aviso_id).count()
     session.close()
     return number
+
+def create_adopcion(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripcion):
+    session = SessionLocal()
+    new_adopcion = AvisoAdopcion(
+        fecha_ingreso=datetime.now(),  
+        sector = sector, 
+        comuna_id=comuna_id,  
+        nombre=nombre,
+        email=email,
+        celular=celular,
+        tipo=tipo,
+        cantidad=cantidad,
+        edad=edad,
+        unidad_medida=unidad_medida,
+        fecha_entrega=fecha_entrega, 
+        descripcion=descripcion
+    )
+
+    session.add(new_adopcion)
+    session.commit()
+    session.close()
+
+    return new_adopcion
+
+def create_foto(ruta_archivo, nombre_archivo, actividad_id):
+    session = SessionLocal()
+    new_foto = Foto(
+        ruta_archivo=ruta_archivo,
+        nombre_archivo=nombre_archivo,
+        actividad_id=actividad_id
+    )
+
+    session.add(new_foto)
+    session.commit()
+    session.close()
+
+def create_contacto(nombre, identificador, actividad_id):
+    session = SessionLocal()
+    new_contacto = ContactarPor(
+        nombre = nombre, 
+        identificador = identificador, 
+        actividad_id = actividad_id
+    )
+
+    session.add(new_contacto)
+    session.commit()
+    session.close()

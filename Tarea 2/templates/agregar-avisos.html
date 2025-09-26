@@ -8,7 +8,7 @@
     <body>
         <h1 class="titulo">Agregar aviso de adopción</h1>
         <div class="container">
-            <form class="formulario" id="agregar-avisos">
+            <form class="formulario" id="agregar-avisos" action="agregar-avisos" method="post">
                 <h3 class="titulos-forms">¿Donde?</h3>
                 <label for="region">Región:</label>
                 <select id="region" name="region">
@@ -34,7 +34,7 @@
                 <br> <br>
 
                 <label for="comuna">Comuna:</label>
-                <select id="comuna">
+                <select id="comuna" name="comuna">
                     <option value="">-- Selecciona una comuna --</option>
                 </select>
 
@@ -44,7 +44,7 @@
                 <input id="sector" name="sector" type="text">
 
                 <br> <br>
-
+ 
                 <h3 class="titulos-forms">¿Contacto de esta publicación?</h3>
                 <label for="nombre">Nombre:</label>
                 <input id="nombre" name="nombre" type="text">
@@ -62,7 +62,7 @@
                 <br><br>
 
                 <label for="contacto">Método de Contacto:</label>
-                <select id="contacto">
+                <select id="contacto" name="contacto">
                     <option value="">-- Selecciona un método de contacto --</option>
                     <option value="whatsapp">WhatsApp</option>
                     <option value="telegram">Telegram</option>
@@ -83,7 +83,7 @@
                 <div id="cont2" hidden>
                     <br>
                     <label for="contacto">Método de Contacto:</label>
-                    <select id="contacto2">
+                    <select id="contacto2" name="contacto2">
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
@@ -97,7 +97,7 @@
 
                     <div id="metodo-cont2">
                         <label for="metodo-contacto">URL o ID de contacto:</label>
-                        <input id="metodo-contacto2" name="metodo-contacto" type="text">
+                        <input id="metodo-contacto2" name="metodo-contacto2" type="text">
                         <button type="button" id="btn-cont2">Agregar nuevo método de contacto e ID o URL</button>            
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                 <div id="cont3" hidden>
                     <br>
                     <label for="contacto">Método de Contacto:</label>
-                    <select id="contacto3">
+                    <select id="contacto3" name="contacto3">
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
@@ -119,7 +119,7 @@
 
                     <div id="metodo-cont3">
                         <label for="metodo-contacto">URL o ID de contacto:</label>
-                        <input id="metodo-contacto3" name="metodo-contacto" type="text">
+                        <input id="metodo-contacto3" name="metodo-contacto3" type="text">
                         <button type="button" id="btn-cont3">Agregar nuevo método de contacto e ID o URL</button>            
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                 <div id="cont4" hidden>
                     <br>
                     <label for="contacto">Método de Contacto:</label>
-                    <select id="contacto4">
+                    <select id="contacto4" name="contacto4">
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
@@ -141,7 +141,7 @@
 
                     <div id="metodo-cont4">
                         <label for="metodo-contacto">URL o ID de contacto:</label>
-                        <input id="metodo-contacto4" name="metodo-contacto" type="text">
+                        <input id="metodo-contacto4" name="metodo-contacto4" type="text">
                         <button type="button" id="btn-cont4">Agregar nuevo método de contacto e ID o URL</button>            
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                 <div id="cont5" hidden>
                     <br>
                     <label for="contacto">Método de Contacto:</label>
-                    <select id="contacto5">
+                    <select id="contacto5" name="contacto5">
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
@@ -164,7 +164,7 @@
 
                     <div id="metodo-cont5">
                         <label for="metodo-contacto">URL o ID de contacto:</label>
-                        <input id="metodo-contacto5" name="metodo-contacto" type="text">            
+                        <input id="metodo-contacto5" name="metodo-contacto5" type="text">            
                     </div>
                 </div>
 
@@ -172,7 +172,7 @@
 
                 <h3>¿Qué mascota ofrece en adopción?</h3>
                 <label for="tipo-mascota">Tipo de mascota:</label>
-                <select id="tipo-mascota">
+                <select id="tipo-mascota" name="tipo-mascota">
                     <option value="">-- Selecciona un tipo de mascota --</option>
                     <option value="perro">Perro</option>
                     <option value="gato">Gato</option>
@@ -191,7 +191,7 @@
                 <br><br>
 
                 <label for="unidad-edad">Unidad de edad:</label>            
-                <select id="unidad-edad">
+                <select id="unidad-edad" name="unidad-edad">
                     <option value="">-- Selecciona una unidad de edad --</option>
                     <option value="meses">Meses</option>
                     <option value="años">Años</option>
