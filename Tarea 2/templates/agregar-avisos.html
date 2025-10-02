@@ -20,7 +20,8 @@
         <div class="container">
             {% if error != "" %}
                 <div class="alert-error">
-                    {{ error }}
+                    Error en el servidor: <br>
+                    {{ error | safe }} 
                 </div>
             {% endif %}
 
@@ -238,7 +239,6 @@
             
         {% if error != "" %}
             <script>
-                error = "Error en el servidor <br>" + error
                 document.documentElement.scrollTop = 0;
             </script>
         {% elif request.method == 'POST' %}
