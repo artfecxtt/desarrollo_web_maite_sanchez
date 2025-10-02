@@ -2,6 +2,7 @@
     text-align: center;
   }
 
+/*todo el drama de las fotos*/
 .container {
   height: 50%;
   max-width: 400px;
@@ -18,11 +19,15 @@
 
 .container-fotos {
   display: flex;
+  flex-wrap: wrap; /*este es el q hace la pega de q se cambien de linea las fotos*/
   justify-content: center;
 }
 
 .container-fotos img {
-  margin-right: 10px
+  margin-right: 10px;
+  margin-bottom: 10px;
+  width: 320px;
+  height: 240px;
 }
 
 .btns {

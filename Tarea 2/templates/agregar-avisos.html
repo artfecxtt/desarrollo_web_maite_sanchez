@@ -3,32 +3,50 @@
     <head>
         <title> Agregar aviso de adopción </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/agregar-avisos.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-avisos.css') }}">
     </head>
     <body>
+
+
+
+
         <h1 class="titulo">Agregar aviso de adopción</h1>
+
+        <div class="container" id="alert-envio" hidden>
+            <br>
+            <h3>Hemos recibido la información de adopción, muchas gracias y suerte!</h3>
+        </div>
+
         <div class="container">
-            <form class="formulario" id="agregar-avisos" action="agregar-avisos" method="post">
+            {% if error != "" %}
+                <div class="alert-error">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <div class="error-forms" id="error-forms" hidden>
+            </div>
+            <form class="formulario" id="agregar-avisos" action="agregar-avisos" method="post" enctype="multipart/form-data">
                 <h3 class="titulos-forms">¿Donde?</h3>
                 <label for="region">Región:</label>
                 <select id="region" name="region">
                     <option value="">-- Selecciona una región</option>
-                    <option value="arica_parinacota">Arica y Parinacota</option>
-                    <option value="tarapaca">Tarapacá</option>
-                    <option value="antofagasta">Antofagasta</option>
-                    <option value="atacama">Atacama</option>
-                    <option value="coquimbo">Coquimbo</option>
-                    <option value="valparaiso">Valparaíso</option>
-                    <option value="metropolitana">Metropolitana</option>
-                    <option value="ohiggins">O’Higgins</option>
-                    <option value="maule">Maule</option>
-                    <option value="nuble">Ñuble</option>
-                    <option value="biobio">Biobío</option>
-                    <option value="araucania">La Araucanía</option>
-                    <option value="los_rios">Los Ríos</option>
-                    <option value="los_lagos">Los Lagos</option>
-                    <option value="aysen">Aysén</option>
-                    <option value="magallanes">Magallanes y Antártica Chilena</option>
+                    <option value="15">Arica y Parinacota</option>
+                    <option value="1">Tarapacá</option>
+                    <option value="2">Antofagasta</option>
+                    <option value="3">Atacama</option>
+                    <option value="4">Coquimbo</option>
+                    <option value="5">Valparaíso</option>
+                    <option value="13">Metropolitana</option>
+                    <option value="6">O’Higgins</option>
+                    <option value="7">Maule</option>
+                    <option value="16">Ñuble</option>
+                    <option value="8">Biobío</option>
+                    <option value="9">La Araucanía</option>
+                    <option value="14">Los Ríos</option>
+                    <option value="10">Los Lagos</option>
+                    <option value="11">Aysén</option>
+                    <option value="12">Magallanes y Antártica Chilena</option>
                 </select> 
                 
                 <br> <br>
@@ -66,10 +84,10 @@
                     <option value="">-- Selecciona un método de contacto --</option>
                     <option value="whatsapp">WhatsApp</option>
                     <option value="telegram">Telegram</option>
-                    <option value="twitter">X</option>
+                    <option value="X">X</option>
                     <option value="instagram">Instagram</option>
                     <option value="tiktok">TikTok</option>
-                    <option value="otro">Otro</option>
+                    <option value="otra">Otro</option>
                 </select>
 
 
@@ -87,10 +105,10 @@
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
-                        <option value="twitter">X</option>
+                        <option value="X">X</option>
                         <option value="instagram">Instagram</option>
                         <option value="tiktok">TikTok</option>
-                        <option value="otro">Otro</option>
+                        <option value="otra">Otro</option>
                     </select>
 
                     <br>
@@ -109,10 +127,10 @@
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
-                        <option value="twitter">X</option>
+                        <option value="X">X</option>
                         <option value="instagram">Instagram</option>
                         <option value="tiktok">TikTok</option>
-                        <option value="otro">Otro</option>
+                        <option value="otra">Otro</option>
                     </select>
 
                     <br>
@@ -131,10 +149,10 @@
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
-                        <option value="twitter">X</option>
+                        <option value="X">X</option>
                         <option value="instagram">Instagram</option>
                         <option value="tiktok">TikTok</option>
-                        <option value="otro">Otro</option>
+                        <option value="otra">Otro</option>
                     </select>
 
                     <br>
@@ -154,10 +172,10 @@
                         <option value="">-- Selecciona un método de contacto --</option>
                         <option value="whatsapp">WhatsApp</option>
                         <option value="telegram">Telegram</option>
-                        <option value="twitter">X</option>
+                        <option value="X">X</option>
                         <option value="instagram">Instagram</option>
                         <option value="tiktok">TikTok</option>
-                        <option value="otro">Otro</option>
+                        <option value="otra">Otro</option>
                     </select>
 
                     <br>
@@ -193,8 +211,8 @@
                 <label for="unidad-edad">Unidad de edad:</label>            
                 <select id="unidad-edad" name="unidad-edad">
                     <option value="">-- Selecciona una unidad de edad --</option>
-                    <option value="meses">Meses</option>
-                    <option value="años">Años</option>
+                    <option value="m">Meses</option>
+                    <option value="a">Años</option>
                 </select>
 
                 <br><br>
@@ -217,13 +235,29 @@
                 <button type="button" id="btn-enviar">Enviar</button>
             </form> 
             <br>
-            <br>
-            <button type="button" id="btn-portada" hidden>Ir a la portada</button>
-
+            
+        {% if error != "" %}
             <script>
-                const PORTADA_URL = "{{ url_for('portada') }}";
+                error = "Error en el servidor <br>" + error
+                document.documentElement.scrollTop = 0;
             </script>
+        {% elif request.method == 'POST' %}
+            <script>
+                document.getElementById("alert-envio").hidden = false;
+                document.documentElement.scrollTop = 0;
+            </script>
+        {% endif %}
+
         </div>
+        <br>
+        <div class="portada">
+            <button type="button" id="btn-portada">Ir a la portada</button>
+        </div>
+                    
+        <script>
+            const PORTADA_URL = "{{ url_for('portada') }}";
+        </script>
+
         <br><br>
 
         <div id="vent-emergente" class="vent">

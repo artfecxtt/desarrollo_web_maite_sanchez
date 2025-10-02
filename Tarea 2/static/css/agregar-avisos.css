@@ -44,3 +44,7 @@
 textarea {
     resize: none;   /* desactiva el redimensionado */
 }
+
+.portada{
+    text-align: center;
+}

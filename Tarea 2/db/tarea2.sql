@@ -1,3 +1,4 @@
+-- Active: 1759107486018@@127.0.0.1@3306@tarea2
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -14,6 +15,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 CREATE SCHEMA IF NOT EXISTS `tarea2` DEFAULT CHARACTER SET utf8 ;
 USE `tarea2` ;
 
+GRANT ALL ON tarea2.* TO cc5002@localhost;
 -- -----------------------------------------------------
 -- Table `tarea2`.`region`
 -- -----------------------------------------------------

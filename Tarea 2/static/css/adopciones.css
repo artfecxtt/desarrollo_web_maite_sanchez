@@ -33,3 +33,11 @@ td {
 h2 {
     font-weight: normal;
 }
+
+.pagination{
+    text-align:center;
+}
+
+.current-page{
+    font-weight: bold;
+}

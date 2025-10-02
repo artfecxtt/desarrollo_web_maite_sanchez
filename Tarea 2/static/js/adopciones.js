@@ -3,8 +3,9 @@ const filas = document.querySelectorAll('.fila-clickeable');
 
 filas.forEach(fila => {
     fila.addEventListener('click', () => {
-      const idCompleto = fila.id; // Obtiene el string 'fila-123'
-      const id = idCompleto.substring(5); // Extrae '123' a partir de la 5ta posición
+      const idCompleto = fila.id; // agarra el string del id de la fila
+
+      const id = idCompleto.split('-')[1]; // saca lo q viene después del -
             
       window.location.href = `/adopcion/${id}`;
     });
@@ -14,7 +15,7 @@ filas.forEach(fila => {
 
 // #########################################################################################
 
-//Botón de portada
+//botón de portada
 const goToPortada = () => {
     window.location.href = PORTADA_URL
 }

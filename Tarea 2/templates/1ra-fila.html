@@ -3,29 +3,49 @@
     <head>
         <title> Adopciones </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/1ra-fila.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/1ra-fila.css') }}">
     </head>
     <body>
         <h1 class="titulo">¡Mira nuestras adopciones!</h1>
 
         <div class="container">
-            <h2>Fecha de Publicación: </h2><h3>{{ datos.aviso.fecha_ingreso }}</h3>
+            <h2>Fecha de Publicación: </h2><h3>{{ dato.aviso.fecha_ingreso }}</h3>
             <hr>
-            <h2>Fecha de Entrega: </h2><h3>{{ datos.aviso.fecha_entrega }}</h3>
+            <h2>Fecha de Entrega: </h2><h3>{{ dato.aviso.fecha_entrega }}</h3>
             <hr>
-            <h2>Comuna: </h2><h3>{{ datos.comuna.comuna }}</h3>
+            <h2>Comuna: </h2><h3>{{ dato.comuna.nombre }}</h3>
             <hr>
-            <h2>Sector: </h2><h3>{{ datos.aviso.sector }}</h3>
+            <h2>Sector: </h2><h3>{{ dato.aviso.sector }}</h3>
             <hr>
-            <h2>Cantidad, Edad y Tipo de mascota: </h2><h3>{{ dato.cantidad }} {{ dato.tipo }} <br> {{ dato.edad }} {% if dato.unidad_medida == 'a' %}años{% else %}meses{% endif %}</h3>
+            <h2>Nombre:</h2> <h3>{{ dato.aviso. nombre }}</h3>
             <hr>
-            {% if dato.contactos.contactos %}
-                {% for contacto in dato.contactos.contactos %}
-                    <h2>Nombre y Contacto: </h2><h3>{{ contacto.nombre }}<br>{{ contacto.identificador }}</h3>
+            <h2>Cantidad, Edad y Tipo de mascota: </h2><h3>{{ dato.aviso.cantidad }} {{ dato.aviso.tipo }} <br> {{ dato.aviso.edad }} {% if dato.aviso.unidad_medida == 'a' %}años{% else %}meses{% endif %}</h3>
+            <hr>
+            {% if dato.contactos %}
+                {% for contacto in dato.contactos %}
+                    <h2>Contacto: </h2>
+                    <h3>{% if contacto.nombre == 'whatsapp' %}Whatsapp
+                        {% else %}
+                            {% if contacto.nombre == 'telegram' %}Telegram
+                            {% else %}
+                                {% if contacto.nombre == 'tiktok' %}TikTok
+                                {% else %}
+                                    {% if contacto.nombre == 'X' %}X
+                                    {% else %}
+                                        {% if contacto.nombre == 'instagram' %}Instagram
+                                        {% else %}
+                                            {% if contacto.nombre == 'otra' %}Otro
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif%}
+                        {% endif %}
+                        <br>{{ contacto.identificador }}</h3>
                     <hr>
                 {% endfor %}
             {% else %}
-                <h2>Nombre y Contacto: </h2><h3>Correo electrónico<br>{{ dato.aviso.email }}</h3>
+                <h2>Contacto: </h2><h3>Correo electrónico<br>{{ dato.aviso.email }}</h3>
                 <hr>
             {% endif %}
             
@@ -34,7 +54,7 @@
         <div class="container" id="fotos">
             <h2>Fotos:</h2>
             <div class="container-fotos">
-                {% for foto in datos.fotos.fotos %}
+                {% for foto in dato.fotos %}
                     <img id="img{{ loop.index }}" 
                         src="{{ url_for('static', filename='uploads/' + foto.nombre_archivo) }}" 
                         alt="Mascota {{ loop.index }}" 
@@ -63,15 +83,15 @@
         <br>
         <br>
         <br>
-        {% for foto in fotos%}
-        <div class="popout" id="img-{{ loop.index }}">
-            <div class="popout-content">
-                <img src="{{ url_for('static', filename='uploads/' + foto) }}" 
-                    alt="Mascota {{ loop.index }}" 
-                    width="800" height="600">
-                <button class="close-btn" onclick="close_popout('img-{{ loop.index }}')" id="closeBtn1">Cerrar</button>
+        {% for foto in dato.fotos %}
+            <div class="popout" id="img-{{ loop.index }}">
+                <div class="popout-content">
+                    <img src="{{ url_for('static', filename='uploads/' + foto.nombre_archivo) }}" 
+                        alt="Mascota {{ loop.index }}" 
+                        width="800" height="600">
+                    <button class="close-btn" onclick="close_popout('img-{{ loop.index }}')" id="closeBtn{{ loop.index }}">Cerrar</button>
+                </div>
             </div>
-        </div>
         {% endfor %}
 
         <script src="{{ url_for('static', filename='js/1ra-fila.js') }}"></script>

@@ -1,11 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for, session
-#from utils.validations import validate_login_user, validate_register_user, validate_confession
-from db.models import AvisoAdopcion, Comuna, Region, Foto, ContactarPor
-from db.db import SessionLocal, register_adopcion, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto
-from sqlalchemy import create_engine, Column, Integer, DateTime, String, Enum, Text, ForeignKey
-from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from flask import Flask, request, render_template
+from db.db import DATABASE_URL, SessionLocal, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto
 from werkzeug.utils import secure_filename
-from utils.validations import validate_create_adopcion
+from utils.validations import validate_create_adopcion, validate_create_foto, validate_create_contacto
 import hashlib
 import filetype
 import os
@@ -15,18 +11,24 @@ ITEMS_PER_PAGE = 5
 
 app = Flask(__name__)
 
+from db.db import AvisoAdopcion, Comuna, Region
 
 app.secret_key = "programacionweb"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
+@app.route("/")
 @app.route("/portada/<int:page_num>")
-def portada(page_num):
-    paginated_avisos = AvisoAdopcion.query.paginate(per_page=ITEMS_PER_PAGE, page=page_num, error_out=True)
+def portada(page_num=1):
+    session_db = SessionLocal()
+    
+    avisos = session_db.query(AvisoAdopcion).order_by(AvisoAdopcion.fecha_ingreso.desc()).limit(5).offset((page_num - 1) * 5).all()
+    total_avisos =session_db.query(AvisoAdopcion).count()
+    total_pages=max(1, (total_avisos + 5 - 1) // 5)
 
     datos_completos = []
-    for dato in paginated_avisos.items:
+    for dato in avisos:
 
         fotos = get_photos_by_aviso(dato.id)
         foto_principal = get_main_photo_by_aviso(dato.id)
@@ -46,37 +48,50 @@ def portada(page_num):
         }
         datos_completos.append(dato_completo)
     
-    return render_template("portada.html", datos=datos_completos, paginacion=paginated_avisos)
+    return render_template("portada.html", datos=datos_completos, current_page=page_num, total_pages=total_pages)
 
 @app.route("/agregar-avisos", methods=["GET", "POST"])
 def agregar_avisos():
+    session_db = SessionLocal()
+    regiones = session_db.query(Region).all()
+    comunas = session_db.query(Comuna).all()
+
+    error = ""
     if request.method == "POST":
-        comuna_id = request.form.get("comuna-id")
+        
+        new_aviso = False
+
+        comuna_id = int(request.form.get("comuna"))
         sector = request.form.get("sector")
         nombre = request.form.get("nombre")
         email = request.form.get("email")
         celular = request.form.get("nro-celular")
         tipo = request.form.get("tipo-mascota")
-        cantidad = request.form.get("cantidad")
-        edad = request.form.get("edad-animal")
+        cantidad = int(request.form.get("cantidad")) #creo q vienen en str los value, así q int por si acaso
+        edad = int(request.form.get("edad-animal"))
         unidad_medida = request.form.get("unidad-edad")
         fecha_entrega = request.form.get("fecha-entrega")
         descripción = request.form.get("descripcion")
 
-        error=""
-
-        if validate_create_adopcion(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripción):
-            new_aviso = create_adopcion(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripción)
-        else:
-            error += "Uno de los campos no es válido"
-
         fotos = request.files.getlist("fotos")
-        for foto in fotos:
-            if validate_create_foto(fotos):
+
+        #si es q tdas las fotos son validas, entonces creamos la adopcion para asociarle las fotos dspués
+        if validate_create_foto(fotos):
+            if validate_create_adopcion(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripción):
+                new_aviso = create_adopcion(comuna_id, sector, nombre, email, celular, tipo, cantidad, edad, unidad_medida, fecha_entrega, descripción)
+            else:
+                error += "- Uno de los campos no es válido. <br>"
+        else:
+            error += "- Fotos inválidas. <br>"
+
+        if new_aviso:
+            # ingresar fotos
+            for foto in fotos:
+                #nombre cn hash
                 _filename = hashlib.sha256(
-                    secure_filename(foto.filename) # nombre del archivo
-                    .encode("utf-8") # encodear a bytes
-                    ).hexdigest()
+                    secure_filename(foto.filename)
+                    .encode("utf-8")
+                ).hexdigest()
                 _extension = filetype.guess(foto).extension
                 img_filename = f"{_filename}.{_extension}"
 
@@ -88,41 +103,59 @@ def agregar_avisos():
                     nombre_archivo=img_filename,
                     actividad_id=new_aviso.id 
                 )
+            
+            # ingresar contactos
+            contactos = [request.form.get("contacto"), 
+                        request.form.get("contacto2"), 
+                        request.form.get("contacto3"), 
+                        request.form.get("contacto4"), 
+                        request.form.get("contacto5")]
+            
+            metodos = [request.form.get("metodo-contacto"), 
+                    request.form.get("metodo-contacto2"), 
+                    request.form.get("metodo-contacto3"), 
+                    request.form.get("metodo-contacto4"), 
+                    request.form.get("metodo-contacto5")]
+            
+            contactos_validos = True
+            for indice, contacto in enumerate(contactos):
+                if contacto != "":
+                    if not validate_create_contacto(contacto, metodos[indice]):
+                        contactos_validos = False
+                        error += f"- Contacto '{contacto}' no es válido. <br>"
+            
+            #crear contactos
+            if contactos_validos:
+                for indice, contacto in enumerate(contactos):
+                    if contacto != "":
+                        create_contacto(
+                            nombre=contacto,
+                            identificador=metodos[indice],
+                            actividad_id=new_aviso.id
+                        )
             else:
-                error += "Fotos inválidas"
-        
-        contactos = [request.form.get("contacto"), 
-                     request.form.get("contacto2"), 
-                     request.form.get("contacto3"), 
-                     request.form.get("contacto4"), 
-                     request.form.get("contacto5")]
-        
-        metodos = [request.form.get("metodo-contacto"), 
-                   request.form.get("metodo-contacto2"), 
-                   request.form.get("metodo-contacto3"), 
-                   request.form.get("metodo-contacto4"), 
-                   request.form.get("metodo-contacto5")]
-        
-        for indice, contacto in enumerate(contactos):
-            if validate_create_contacto(contacto, metodos[indice]):
-                create_contacto(
-                    nombre = contacto,
-                    identificador = metodos[indice],
-                    actividad_id = new_aviso.id
-                )
-            else:
-                error += "Contactos inválidos"
+                # si hay contactos q no sirven, se elimina el new_aviso
+                session_db.delete(new_aviso)
+                session_db.commit()
+                error += "- No se pudo crear el aviso debido a contactos inválidos. <br>"
+                
+        else:
+            error += "- No se pudo crear el aviso de adopción. <br>"
+
+    session_db.close()
+    return render_template("agregar-avisos.html", error=error, regiones=regiones, comunas=comunas)
 
 
-
-    return render_template("agregar-avisos.html", error=error)
-
+@app.route("/adopciones")
 @app.route("/adopciones/<int:page_num>")
-def adopciones(page_num):
-    paginated_avisos = AvisoAdopcion.query.paginate(per_page=ITEMS_PER_PAGE, page=page_num, error_out=True)
-    
+def adopciones(page_num=1):
+    session_db = SessionLocal()
+    avisos = session_db.query(AvisoAdopcion).order_by(AvisoAdopcion.fecha_ingreso.desc()).limit(5).offset((page_num - 1) * 5).all()
+    total_avisos =session_db.query(AvisoAdopcion).count()
+    total_pages=max(1, (total_avisos + 5 - 1) // 5)
+
     datos_completos = []
-    for dato in paginated_avisos.items:
+    for dato in avisos:
 
         fotos = get_photos_by_aviso(dato.id)
         foto_principal = get_main_photo_by_aviso(dato.id)
@@ -142,38 +175,34 @@ def adopciones(page_num):
         }
         datos_completos.append(dato_completo)
 
-    return render_template("adopciones.html", datos=datos_completos, paginacion=page_num)
+    return render_template("adopciones.html", datos=datos_completos, current_page=page_num, total_pages = total_pages)
 
 @app.route('/adopcion/<int:adopcion_id>')
 def detalle_adopcion(adopcion_id):
 
     session_db = SessionLocal()
     
-    datos = session_db.query(AvisoAdopcion).all()
-    
-    datos_completos = []
-    for dato in datos:
+    dato = session_db.query(AvisoAdopcion).filter_by(id=adopcion_id).first()
 
-        fotos = get_photos_by_aviso(dato.id)
-        foto_principal = get_main_photo_by_aviso(dato.id)
-        num_fotos = get_number_of_photos_by_aviso(dato.id)
-        comuna = get_comuna_by_aviso(dato.id)
-        region = get_region_by_aviso(dato.id)
-        contactos = get_contactos_by_aviso(dato.id)
+    fotos = get_photos_by_aviso(dato.id)
+    foto_principal = get_main_photo_by_aviso(dato.id)
+    num_fotos = get_number_of_photos_by_aviso(dato.id)
+    comuna = get_comuna_by_aviso(dato.id)
+    region = get_region_by_aviso(dato.id)
+    contactos = get_contactos_by_aviso(dato.id)
         
-        dato_completo = {
-            'aviso': dato,
-            'fotos': fotos,
-            'foto_principal': foto_principal, 
-            'num_fotos': num_fotos,  
-            'comuna': comuna,
-            'region': region, 
-            'contactos': contactos
-        }
-        datos_completos.append(dato_completo)
+    dato_completo = {
+        'aviso': dato,
+        'fotos': fotos,
+        'foto_principal': foto_principal, 
+        'num_fotos': num_fotos,  
+        'comuna': comuna,
+        'region': region, 
+        'contactos': contactos
+    }
     
     session_db.close()
-    return render_template('1ra-fila.html', datos=datos_completos)
+    return render_template('1ra-fila.html', dato=dato_completo)
 
 @app.route("/estadisticas")
 def estadisticas():
