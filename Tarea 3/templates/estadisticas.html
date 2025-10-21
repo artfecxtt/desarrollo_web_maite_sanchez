@@ -4,6 +4,10 @@
         <title> Estadísticas </title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     </head>
     <body>
         <div class="main">
@@ -15,7 +19,9 @@
                 Cantidad de avisos de adopción por día
             </h3>
 
-            <img src="{{ url_for('static', filename='images/cantidad-diaria.png') }}" alt="graph-lines avisos por día">
+            <div id="grafico_linea" class = "grafico">
+
+            </div>
 
             <hr>
 
@@ -23,7 +29,7 @@
                 Total de avisos por tipo de mascota
             </h3>
         
-            <img src="{{ url_for('static', filename='images/cantidad-tipo-mascota.png') }}" alt="graph-cake avisos por tipo mascota">
+            <div id="grafico_torta" class = "grafico"> </div>
             
             <hr>
 
@@ -31,7 +37,7 @@
                 Cantidad de avisos mensuales por tipo de mascota
             </h3>
 
-            <img src="{{ url_for('static', filename='images/cantidad-mensual.png') }}" alt="graph-bar avisos mensuales por tipo mascota">
+            <div id="grafico_barra" class = "grafico"></div>
 
 
 
@@ -50,7 +56,6 @@
             <br>
 
         </div>
-
         <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
     </body>
 </html>

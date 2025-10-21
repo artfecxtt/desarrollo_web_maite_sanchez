@@ -1,5 +1,5 @@
-from flask import Flask, request, render_template
-from db.db import DATABASE_URL, SessionLocal, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto
+from flask import Flask, request, render_template, jsonify
+from db.db import DATABASE_URL, SessionLocal, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto, get_avisos_per_day, get_avisos_per_month_pet_type, get_avisos_per_pet_type
 from werkzeug.utils import secure_filename
 from utils.validations import validate_create_adopcion, validate_create_foto, validate_create_contacto
 import hashlib
@@ -207,6 +207,18 @@ def detalle_adopcion(adopcion_id):
 @app.route("/estadisticas")
 def estadisticas():
     return render_template("estadisticas.html")
+
+#ruta para el tema del ajax
+@app.route("/get-estadisticas", methods=["GET"])
+def get_estadisticas():
+    try:
+        avisos_por_dia = get_avisos_per_day()
+        avisos_por_tipo = get_avisos_per_pet_type()
+        avisos_por_mes_tipo = get_avisos_per_month_pet_type()
+
+        return jsonify({"status": "ok", "data": {"g_linea": avisos_por_dia, "g_torta": avisos_por_tipo, "g_barra": avisos_por_mes_tipo}})
+    except Exception as error:
+        return  jsonify({"status": "error", "data": []}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)

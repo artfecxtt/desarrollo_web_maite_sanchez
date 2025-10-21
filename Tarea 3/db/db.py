@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, DateTime, String, Enum, Text, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, DateTime, String, Enum, Text, ForeignKey, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 import datetime
 
@@ -172,3 +172,88 @@ def create_contacto(nombre, identificador, actividad_id):
     session.commit()
     session.refresh(new_contacto)
     session.close()
+
+def get_avisos_per_day():
+    #func como que hace que cosas de sql normal pasen a sqlalchemy, me deja hacer el count y date, además del label
+    #para hacer como nuevas tablas y después poder usar lo q ya usabamos antes de query
+
+    session = SessionLocal()
+    dias = func.date(AvisoAdopcion.fecha_ingreso).label('dia')
+    avisos = func.count(AvisoAdopcion.id).label('cantidad')
+    avisos_por_dia = session.query(dias, avisos).group_by(dias).order_by(dias).all()
+    session.close()
+
+    #ahora tenemos que hacer q las cosas estén en el formato del json
+    datos_json = []
+    for dia, cantidad in avisos_por_dia:
+        dia_str = str(dia)
+        datos_json.append({"dia": dia_str, "cantidad": cantidad})
+    
+    return datos_json
+
+def get_avisos_per_pet_type():
+    session = SessionLocal()
+    mascota = AvisoAdopcion.tipo.label('tipo')
+    avisos = func.count(AvisoAdopcion.id).label('cantidad')
+    avisos_por_mascota = session.query(mascota, avisos).group_by(mascota).all()
+    session.close()
+
+    datos_json = {"perro": 0, "gato": 0}
+    for tipo, cantidad in avisos_por_mascota:
+        if tipo == 'perro':
+            datos_json["perro"] = cantidad
+        elif tipo == 'gato':
+            datos_json["gato"] = cantidad
+    
+    return datos_json
+
+def get_avisos_per_month_pet_type():
+    session = SessionLocal()
+    mes = func.month(AvisoAdopcion.fecha_ingreso).label("mes")
+    mascota = AvisoAdopcion.tipo.label('tipo')
+    avisos = func.count(AvisoAdopcion.id).label('cantidad')
+
+    por_mes_tipo = session.query(mes, mascota, avisos).group_by(mes, mascota).order_by(mes, mascota).all()
+    session.close()
+    #esto me devuelve (nro_mes, tipo_mascota, nro_avisos)
+    #me devuelve mes en números del 1 al 12, la idea es q en el gráfico sea solo en letras
+    #hagamos una traducción
+
+    trad_num_mes = {1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio", 7: "Julio", 
+                    8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"}
+    
+    #para pasar los datos a json, este caso es interesante pq hay q colocar el mes + cantidad de perros + cantidad de gatos
+
+    #guardamos aquí los datos por mes, pq vamos a ir teniendo q llenarlo de a poquito con los datos para perros y gatos
+    grupos_datos = {}
+    
+    for mes, tipo, cantidad in por_mes_tipo:
+        
+        #en el dicc de grupos, vamos a guardar por el nro del mes
+        nro_mes = mes
+        
+        #si es q el mes no está en el grupo, vamos a crearlo, asignándole al nro del mes otro diccionario q es el q
+        #se le debe dar a json
+        if nro_mes not in grupos_datos:
+            grupos_datos[nro_mes] = {
+                "mes": trad_num_mes[nro_mes], 
+                "perro": 0, #datos 0 pq estamos recién creándolo
+                "gato": 0
+            }
+        
+        #ahora, asignamos las cantidades según el tipo q estemos viendo
+        if tipo == 'perro':
+            grupos_datos[nro_mes]["perro"] = cantidad
+        elif tipo == 'gato':
+            grupos_datos[nro_mes]["gato"] = cantidad
+    
+    #ya cn los datos hechos, ordenamos por el nro del mes para q estén en orden de enero a diciembre (cn el sorted)
+    #ponemos los datos en el datos_json según el nro de mes en las llaves del diccionario d grupos
+    datos_json = []
+    for meses in sorted(grupos_datos.keys()):
+        datos_json.append(grupos_datos[meses])
+    
+    return datos_json
+
+
+

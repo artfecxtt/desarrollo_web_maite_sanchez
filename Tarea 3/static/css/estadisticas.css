@@ -7,6 +7,12 @@
     font-weight: normal;
 }
 
+.grafico {
+    width: 800px;
+    height: 400px;
+    margin: 0 auto;
+}
+
 .main {
     text-align: center;
 }
