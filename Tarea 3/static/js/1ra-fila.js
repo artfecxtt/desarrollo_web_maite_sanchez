@@ -28,7 +28,7 @@ const close_popout = (id) => {
 }
 
 // ############################################################
-// validaciones del forms
+// validaciones del forms (creo q al final esto hace poco y nada en el forms, pero es bno tener doble validación supongo)
 
 const validarForm = () => {
 
@@ -77,18 +77,18 @@ let fetchAJAX = (nombre, texto) => {
     alertContainer.textContent = ''
 
     fetch(ENDPOINT, {method: "POST", 
-        headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(datos) })
+        headers: { 'Content-Type': 'application/json'}, body: JSON.stringify(datos) }) // esto es cmo obligatorio creo, la página d mozilla lo hacía
         .then((response => {
             return response.json().then((response_2 => {
                 if (!response.ok){
                     error_msg = response_2.error
                     throw new Error(error_msg)
                 }
-                return response_2
+                return response_2 // para q me lea el error solo si hay error y si no me lea el mensaje de cuando hay éxito
             }))
         }))
         .then((ajaxResponse) => {
-            mensaje = ajaxResponse.message
+            mensaje = ajaxResponse.message //msg exito
             alertContainer.textContent = mensaje;
             
             const fecha = ajaxResponse.comentario.fecha
@@ -112,7 +112,7 @@ let fetchAJAX = (nombre, texto) => {
 
             comentariosContainer.prepend(div_comentario)
 
-            formComentario.reset()
+            formComentario.reset() //limpia el forms si el comentario fue exitoso
         })
         .catch((error) => {
             alertContainer.textContent = "Error en el servidor: \n"+ error_msg;

@@ -201,12 +201,12 @@ def detalle_adopcion(adopcion_id):
         'comuna': comuna,
         'region': region, 
         'contactos': contactos, 
-        'comentarios': comentarios
+        'comentarios': comentarios #añadimos para q se muestren comentarios en el html si es q hay
     }
     
-    if request.method == "POST":
+    if request.method == "POST": #si se está cargando un comentario
 
-        post_datos = request.get_json()
+        post_datos = request.get_json() #recibe los comentarios q le manda el fetchAjax
 
         if post_datos == None:
             return jsonify({"error":"Datos JSON inválidos"})
@@ -216,9 +216,9 @@ def detalle_adopcion(adopcion_id):
 
 
         if validate_comentario(post_nombre, post_texto):
-            new_comentario = create_comentario(post_nombre, post_texto, adopcion_id)
-            fecha_formateada = new_comentario.fecha.strftime("%Y-%m-%d %H:%M:%S")
-            comentario = {"nombre": new_comentario.nombre, "texto": new_comentario.texto, "fecha": fecha_formateada}
+            new_comentario = create_comentario(post_nombre, post_texto, adopcion_id) #lo mismo q antes para agregar-aviso
+            fecha_formateada = new_comentario.fecha.strftime("%Y-%m-%d %H:%M:%S") #formateo d fecha para q esté bonita
+            comentario = {"nombre": new_comentario.nombre, "texto": new_comentario.texto, "fecha": fecha_formateada} #entrega al js para cargar el comentario cn el fetchAjax
             session_db.close()
             return jsonify({"message": "¡Tu comentario ha sido ingresado con éxito, muchas gracias!", 
                             "comentario": comentario})
@@ -234,7 +234,7 @@ def detalle_adopcion(adopcion_id):
 def estadisticas():
     return render_template("estadisticas.html")
 
-#ruta para el tema del ajax
+#ruta para el tema del ajax d las estadísticas
 @app.route("/get-estadisticas", methods=["GET"])
 def get_estadisticas():
     try:

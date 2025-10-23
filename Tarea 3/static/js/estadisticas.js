@@ -176,7 +176,7 @@ let fetchAJAX = () => {
         })
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname === '/estadisticas') {
         fetchAJAX(); 
     }
