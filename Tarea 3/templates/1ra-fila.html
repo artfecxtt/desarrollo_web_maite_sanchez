@@ -70,7 +70,7 @@
 
             <div class="alert-forms" id="alert-forms"></div>
 
-            <form class="formulario" id="form-add-comentario" aviso-id="{{ dato.aviso.id }}" action="{{ request.path }}" method="post">
+            <form class="formulario" id="form-add-comentario" name="{{ dato.aviso.id }}" action="{{ request.path }}" method="post">
                 <label for="form-nombre">Nombre:</label>
                 <textarea id="form-nombre" name="form-nombre" rows="1">{{ nombre_previo if error else '' }}</textarea> 
 

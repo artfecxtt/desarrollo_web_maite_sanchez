@@ -70,7 +70,7 @@ const comentariosContainer = document.getElementById("div-comentarios")
 
 
 let fetchAJAX = (nombre, texto) => {
-    const aviso_id = formComentario.getAttribute("aviso-id")
+    const aviso_id = formComentario.getAttribute("name")
     const ENDPOINT = `/adopcion/${aviso_id}`
     const datos = { nombre, texto }
 
