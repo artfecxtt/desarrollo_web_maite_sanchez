@@ -79,3 +79,7 @@ hr {
   cursor: pointer;
 }
 
+textarea {
+    resize: none;   /* desactiva el redimensionado */
+}
+

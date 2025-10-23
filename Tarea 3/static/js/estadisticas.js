@@ -25,8 +25,8 @@ let procesarDatosTorta = (datos) => {
     //console.log("ENTRADA:", datos)
 
     const formato_datos = [{
-        name: "Perros", y: datos.perro}, 
-        {name: "Gatos", y: datos.gato
+        name: "Perros", y: datos.perro, color: '#8FAED9'}, 
+        {name: "Gatos", y: datos.gato, color: '#465870' 
     }]
 
     //console.log("SALIDA:", formato_datos)
@@ -74,7 +74,7 @@ let crearGraficoLinea = (datos) => {
         series: [{
             name: 'Cantidad de avisos por día', 
             data: datitos, 
-            color: '#59828b'
+            color: '#465870'
         }]
     })
 
@@ -141,11 +141,13 @@ let crearGraficoBarra = (datos) => {
         },
         series: [{
             name: 'Perros', 
-            data: datitos.datos_perro
+            data: datitos.datos_perro, 
+            color: '#8FAED9'
         }, 
         { 
             name: 'Gatos', 
-            data: datitos.datos_gato }]
+            data: datitos.datos_gato, 
+            color: '#465870'}]
     });
 }
 

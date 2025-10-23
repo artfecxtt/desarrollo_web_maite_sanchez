@@ -40,6 +40,7 @@ class AvisoAdopcion(Base):
     comuna = relationship("Comuna", back_populates="avisos")
     fotos = relationship("Foto", back_populates="aviso", foreign_keys="[Foto.actividad_id]")
     contactos = relationship("ContactarPor", back_populates="aviso", foreign_keys="[ContactarPor.actividad_id]")
+    comentarios = relationship("Comentario", back_populates="aviso", foreign_keys="[Comentario.aviso_id]")
 
 class Comuna(Base):
     __tablename__ = 'comuna'
@@ -78,6 +79,17 @@ class ContactarPor(Base):
     actividad_id = Column(Integer, ForeignKey('aviso_adopcion.id'), nullable=False)
 
     aviso = relationship("AvisoAdopcion", back_populates="contactos", foreign_keys=[actividad_id])
+
+class Comentario(Base):
+    __tablename__ = 'comentario'
+
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(80), nullable = False)
+    texto = Column(String(300), nullable = False)
+    fecha = Column(DateTime, nullable=False)
+    aviso_id = Column(Integer, ForeignKey('aviso_adopcion.id'), nullable=False)
+
+    aviso = relationship("AvisoAdopcion", back_populates="comentarios", foreign_keys=[aviso_id])
 
 
 ###########################################################################################################
@@ -255,5 +267,25 @@ def get_avisos_per_month_pet_type():
     
     return datos_json
 
+def get_comentarios_by_id(aviso_id):
+    session = SessionLocal()
+    comentarios = session.query(Comentario).filter_by(aviso_id=aviso_id).order_by(Comentario.fecha.desc()).all()
+    session.close()
 
+    return comentarios
 
+def create_comentario(nombre, texto, aviso_id):
+    session = SessionLocal()
+    new_comentario = Comentario(
+        nombre =  nombre, 
+        texto = texto, 
+        fecha = datetime.datetime.now(), 
+        aviso_id = aviso_id
+    )
+
+    session.add(new_comentario)
+    session.commit()
+    session.refresh(new_comentario)
+    session.close()
+
+    return new_comentario

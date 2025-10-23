@@ -89,3 +89,12 @@ def validate_create_foto(fotos):
 
 def validate_create_contacto(contacto, metodo):
     return validate_contacto(contacto, metodo)
+
+def validate_comentario_nombre(nombre):
+    return nombre and (len(nombre.strip()) >= 3) and (len(nombre.strip()) <= 80)
+
+def validate_comentario_texto(texto):
+    return texto and (len(texto.strip()) >= 5)
+
+def validate_comentario(nombre, texto):
+    return validate_comentario_nombre(nombre) and validate_comentario_texto(texto)

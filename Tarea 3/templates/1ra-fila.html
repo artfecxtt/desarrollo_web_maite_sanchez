@@ -65,7 +65,35 @@
             </div>
         </div>
 
-        <br><br>
+        <div class="container" id="conteiner-forms">
+            <h2>¿Quieres agregar un comentario sobre esta mascota? ¡Hazlo aquí!</h2>
+
+            <div class="alert-forms" id="alert-forms"></div>
+
+            <form class="formulario" id="form-add-comentario" aviso-id="{{ dato.aviso.id }}" action="{{ request.path }}" method="post">
+                <label for="form-nombre">Nombre:</label>
+                <textarea id="form-nombre" name="form-nombre" rows="1">{{ nombre_previo if error else '' }}</textarea> 
+
+                <br> <br>
+
+                <label for="form-comentario">Añade tu comentario:</label>
+                <textarea id="form-comentario" name="form-comentario" cols="50" rows="4">{{ texto_previo if error else '' }}</textarea> 
+
+                <button type="submit" id="btn-comentario">Agregar comentario</button>
+            </form>
+
+        </div>
+
+        <div class="container" id="container-comentarios" name="container-comentarios">
+            <h1>Comentarios:</h1>
+            <div class="comentarios" id="div-comentarios">
+                {% for comentario in dato.comentarios %}
+                    <p class="texto">{{ comentario.nombre }} - {{ comentario.fecha }}:</p>
+                    <p class="texto">{{ comentario.texto }}</p>
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
 
         <div class="btns">
             <button type="button" id="btn-portada">Ir a la portada</button>

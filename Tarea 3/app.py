@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
-from db.db import DATABASE_URL, SessionLocal, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto, get_avisos_per_day, get_avisos_per_month_pet_type, get_avisos_per_pet_type
+from db.db import DATABASE_URL, SessionLocal, get_region_by_aviso, get_number_of_photos_by_aviso, get_main_photo_by_aviso, get_comuna_by_aviso, get_photos_by_aviso, get_contactos_by_aviso, create_adopcion, create_contacto, create_foto, get_avisos_per_day, get_avisos_per_month_pet_type, get_avisos_per_pet_type, create_comentario, get_comentarios_by_id
 from werkzeug.utils import secure_filename
-from utils.validations import validate_create_adopcion, validate_create_foto, validate_create_contacto
+from utils.validations import validate_create_adopcion, validate_create_foto, validate_create_contacto, validate_comentario
 import hashlib
 import filetype
 import os
@@ -177,10 +177,11 @@ def adopciones(page_num=1):
 
     return render_template("adopciones.html", datos=datos_completos, current_page=page_num, total_pages = total_pages)
 
-@app.route('/adopcion/<int:adopcion_id>')
+@app.route('/adopcion/<int:adopcion_id>', methods=["GET", "POST"])
 def detalle_adopcion(adopcion_id):
 
     session_db = SessionLocal()
+    error = ""
     
     dato = session_db.query(AvisoAdopcion).filter_by(id=adopcion_id).first()
 
@@ -190,6 +191,7 @@ def detalle_adopcion(adopcion_id):
     comuna = get_comuna_by_aviso(dato.id)
     region = get_region_by_aviso(dato.id)
     contactos = get_contactos_by_aviso(dato.id)
+    comentarios = get_comentarios_by_id(dato.id)
         
     dato_completo = {
         'aviso': dato,
@@ -198,11 +200,35 @@ def detalle_adopcion(adopcion_id):
         'num_fotos': num_fotos,  
         'comuna': comuna,
         'region': region, 
-        'contactos': contactos
+        'contactos': contactos, 
+        'comentarios': comentarios
     }
     
+    if request.method == "POST":
+
+        post_datos = request.get_json()
+
+        if post_datos == None:
+            return jsonify({"error":"Datos JSON inválidos"})
+        
+        post_nombre = post_datos.get("nombre")
+        post_texto = post_datos.get("texto")
+
+
+        if validate_comentario(post_nombre, post_texto):
+            new_comentario = create_comentario(post_nombre, post_texto, adopcion_id)
+            fecha_formateada = new_comentario.fecha.strftime("%Y-%m-%d %H:%M:%S")
+            comentario = {"nombre": new_comentario.nombre, "texto": new_comentario.texto, "fecha": fecha_formateada}
+            session_db.close()
+            return jsonify({"message": "¡Tu comentario ha sido ingresado con éxito, muchas gracias!", 
+                            "comentario": comentario})
+        else:
+            session_db.close()
+            return jsonify({"error": "Error de validación de datos, rellena nombre y comentario, nombre de mínimo 3 caracteres y máximo 80, comentario de mínimo 5 caracteres"}), 400
+
     session_db.close()
-    return render_template('1ra-fila.html', dato=dato_completo)
+
+    return render_template('1ra-fila.html', error=error, dato=dato_completo)
 
 @app.route("/estadisticas")
 def estadisticas():
