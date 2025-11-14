@@ -1,0 +1,31 @@
+.titulos{
+    text-align: center;
+}
+
+
+.evaluaciones{
+    text-align: center;
+}
+
+.container {
+  height: 50%;
+  max-width: 50%;
+  margin: auto;
+  background-color: #afd1d7;
+}
+
+.tabla-avisos{
+    margin: auto;
+}
+
+.main {
+    font-weight: bold;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    }
+td {
+    border: black 1px solid;
+}
