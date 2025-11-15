@@ -1,14 +1,9 @@
 package tarea4.tarea4.models;
 
-import java.time.LocalDateTime;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 

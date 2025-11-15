@@ -2,8 +2,6 @@ package tarea4.tarea4.models;
 
 import java.time.LocalDateTime;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.*;
 
