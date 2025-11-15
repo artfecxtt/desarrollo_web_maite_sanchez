@@ -1,0 +1,32 @@
+<div th:fragment="tablaAvisos(avisos)">
+    <tbody>
+        <tr th:each="aviso : ${avisos}">
+            <td th:text="${aviso.id}"></td>
+            <td th:text="${aviso.fecha_ingreso}"></td>
+            <td th:text="${aviso.sector}"></td>
+            <td>
+                <span th:text="${aviso.cantidad}"></span>;
+                <span th:text="${aviso.edad}"></span>;
+                <span th:text="${aviso.tipo}"></span>
+            </td>
+            <td th:text="${aviso.comuna.nombre}"></td>
+            <td>
+                <span th:id="'promedio-' + ${aviso.id}" 
+                    th:text="${promedios.get(aviso.id)}"></span>
+            </td>
+            <td>
+
+                <button th:onclick="'mostrarFormulario(' + ${aviso.id} + ')'" 
+                        class="btn-calificar">Calificar</button>
+                
+
+                <div th:id="'form-nota-' + ${aviso.id}" class="form-nota">
+                    <br>
+                    <p>¡Califica a esta mascota!</p>
+                    <input type="number" th:id="'input-nota-' + ${aviso.id}" min="1" max="7" placeholder="1-7">
+                    <button th:onclick="'agregarNota(' + ${aviso.id} + ')'" class="btn-enviar">Enviar</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</div>
