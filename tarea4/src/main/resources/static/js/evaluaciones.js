@@ -1,0 +1,38 @@
+const validadorNota = (nota) => {
+    return (nota>=1) && (nota<=7) && nota;
+}
+
+const mostrarFormulario = (aviso_id) => {
+    document.getElementById('form-nota-' + aviso_id).style.display = 'flex';
+}
+
+const agregarNota = (avisoId) => {
+
+    const inputNota = document.getElementById('input-nota-' + avisoId);
+    const nota = inputNota.value;
+    
+    if (!validadorNota(nota)) {
+        alert('La nota debe estar entre 1 y 7');
+        return;
+    }
+    
+    fetch('/avisos/' + avisoId + '/notas', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nota: parseInt(nota)})
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Error al guardar nota');
+        inputNota.value = '';
+        return fetch('/avisos/' + avisoId + '/promedio');
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('promedio-' + avisoId).textContent = 
+            data.promedio.toFixed(1);
+        alert('Nota agregada correctamente');
+    })
+    .catch(error => {
+        alert('Error: ' + error.message);
+    });
+}
