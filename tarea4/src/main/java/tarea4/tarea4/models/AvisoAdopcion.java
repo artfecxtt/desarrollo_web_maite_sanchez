@@ -127,7 +127,7 @@ public class AvisoAdopcion {
         return edad;
     }
 
-    public UnidadMedida getUnidadMedida(){
+    public UnidadMedida getUnidad_medida(){
         return unidad_medida;
     }
 

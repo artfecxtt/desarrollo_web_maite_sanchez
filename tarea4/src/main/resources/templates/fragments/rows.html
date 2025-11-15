@@ -2,17 +2,31 @@
     <tbody>
         <tr th:each="aviso : ${avisos}">
             <td th:text="${aviso.id}"></td>
-            <td th:text="${aviso.fecha_ingreso}"></td>
+            <td th:text="${#temporals.format(aviso.fecha_ingreso, 'dd/MM/yyyy, HH:mm')}"></td>
             <td th:text="${aviso.sector}"></td>
             <td>
+                <!--<div>
+                    unidad_medida: <span th:text="${aviso.unidad_medida}"></span>
+                </div>-->
                 <span th:text="${aviso.cantidad}"></span>;
-                <span th:text="${aviso.edad}"></span>;
-                <span th:text="${aviso.tipo}"></span>
+                <!--<span th:text="${aviso.edad} + ' ' + ${aviso.unidad_medida.toString() == 'a' ? 'años' : 'meses'}"></span>-->
+                <span th:if="${aviso.unidad_medida.toString() == 'a'}">
+                    <span th:text="${aviso.edad + ' años'}"></span>;
+                </span>
+                <span th:unless="${aviso.unidad_medida.toString() == 'a'}">
+                    <span th:text="${aviso.edad + ' meses'}"></span>;
+                </span>
+                <span th:text="${#strings.capitalize(aviso.tipo.toString())}"></span>
             </td>
             <td th:text="${aviso.comuna.nombre}"></td>
             <td>
-                <span th:id="'promedio-' + ${aviso.id}" 
-                    th:text="${promedios.get(aviso.id)}"></span>
+                <span th:id="'promedio-' + ${aviso.id}" th:if="${promedios.get(aviso.id) == 0}">
+                    <span>-</span>
+                </span>
+                <span th:id="'promedio-' + ${aviso.id}" th:unless="${promedios.get(aviso.id) == 0}">
+                    <span th:text="${#numbers.formatDecimal(promedios.get(aviso.id), 1, 1)}"></span>
+                </span>
+
             </td>
             <td>
 

@@ -14,6 +14,14 @@
   background-color: #afd1d7;
 }
 
+.containerAlert {
+  text-align: center;
+  height: 50%;
+  max-width: 50%;
+  margin: auto;
+  background-color: #afd1d7;
+}
+
 .tabla-avisos{
     margin: auto;
 }
@@ -32,4 +40,9 @@ table {
     }
 td {
     border: black 1px solid;
+    padding: 10px
+}
+
+th {
+  padding: 10px;
 }

@@ -1,18 +1,23 @@
 const validadorNota = (nota) => {
-    return (nota>=1) && (nota<=7) && nota;
+    const notaNum = parseFloat(nota);
+    return (notaNum>=1) && (notaNum<=7) && notaNum && Number.isInteger(notaNum);
 }
 
 const mostrarFormulario = (aviso_id) => {
     document.getElementById('form-nota-' + aviso_id).style.display = 'flex';
 }
 
+const alertContainer = document.getElementById("alerts")
+
 const agregarNota = (avisoId) => {
+
+    alertContainer.textContent=''
 
     const inputNota = document.getElementById('input-nota-' + avisoId);
     const nota = inputNota.value;
     
     if (!validadorNota(nota)) {
-        alert('La nota debe estar entre 1 y 7');
+        alertContainer.innerHTML = 'Nota tiene que ser un entero entre 1 y 7'
         return;
     }
     
@@ -30,9 +35,13 @@ const agregarNota = (avisoId) => {
     .then(data => {
         document.getElementById('promedio-' + avisoId).textContent = 
             data.promedio.toFixed(1);
-        alert('Nota agregada correctamente');
+        alertContainer.textContent = 'Nota agregada correctamente'
+        const brElement = document.createElement("br");
+        alertContainer.append(brElement)
     })
     .catch(error => {
-        alert('Error: ' + error.message);
+        alertContainer.textContent = 'Error:' + error.message
+        const brElement = document.createElement("br");
+        alertContainer.append(brElement)
     });
 }
